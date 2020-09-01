@@ -1,0 +1,63 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block asli %}
+
+
+    {% if request.user.is_authenticated %}
+    <br>
+
+
+    <div class="container">
+        <div class="row">
+
+            {% for product in page_obj %}
+                <div class="col-lg-4 col-md-auto">
+                    <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 18rem;">
+                        <img src="{{ product.image.url }}" class="card-img-top" alt="..."
+                             style="width: 15rem;height: 15rem">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the card's content.</p>
+                            <a href="#" class="btn btn-dark">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="mx-auto" style="width: 200px;">
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    <li><a href="?page={{ page_obj.previous_page_number }}" class="btn btn-secondary">قبلی</a></li>
+                {% endif %}
+                {% for page in paginator.page_range %}
+
+                    {% if page == page_obj.number %}
+                        <li class="active"><a href="?page={{ page }}" class="btn btn-secondary">{{ page }}</a></li>
+                    {% else %}
+                        <li><a href="?page={{ page }}" class="btn btn-secondary">{{ page }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li><a href="?page={{ page_obj.next_page_number }}" class="btn btn-secondary">بعدی</a></li>
+                {% endif %}
+            </ul>
+        </div>
+
+    </div>
+
+    {% else %}
+    <br>
+<div class="text-center">
+ <div class="spinner-grow text-danger" role="status">
+</div>
+ <p>برای مشاهده سایت باید ابتدا وارد شوید</p>
+</div>
+
+
+    {% endif %}
+
+{% endblock %}
